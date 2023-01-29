@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+<h2><b>{{ function_detailes[1] }}</b> Function</h2>
+<br />
+<h3>Function Info.</h3>
+<br />
+<div style="border: 1px dashed #aaa; border-radius: 10px">
+  <table>
+    <thead>
+      <th>Title</th>
+      <th>Info</th>
+    </thead>
+    <tbody>
+      {% for title, info in zip(function_titles, function_detailes) %}
+      <tr>
+        <td>{{ title }}</td>
+        <td>{{ info }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br />
+<br />
+
+<h3>Moves In This Function</h3>
+<br />
+
+<div style="border: 1px dashed #aaa; border-radius: 10px">
+  <table>
+    <thead>
+      {% for head in moves_table_header %}
+      <th>{{ head }}</th>
+      {% endfor %}
+    </thead>
+    <tbody>
+      {% for function in query %}
+      <tr>
+        {% for i, cell in enumerate(function) %}
+        <td>{{ cell }}</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br />
+<br />
+<div class="container-btn">
+<button class="btn" onclick=location.href="{{ url_for('functions') }}";>
+  <span> Back to functions </span>
+</button>
+    {% if bool(function_detailes[-1]) %}
+    <button class="blue btn deabled">
+    <span> CANNOT Edit This Function </span>
+    {% else %}
+    <button class="blue btn" onclick="location.href=`{{ url_for('edit_function', id=function_detailes[0]) }}`">
+    <span> Edit This Function </span>
+    {% endif %}
+</button>
+</div>
+{% endblock %}

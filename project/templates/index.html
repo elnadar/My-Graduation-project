@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #container{
+        align-items: center !important;
+    }
+    #content{
+        width: 100% !important;
+    }
+</style>
+<h3 style="text-align: center">
+    Welcome to
+</h3>
+<h2>
+    <font size="40px"><b>Al-Jazari</b></font><br> TeleRobotics Ecosystem.
+</h2>
+<h3 style="text-align: center">
+    Your Current Enspiring Models...
+</h3>
+<div id="models">
+    {% for model in query %}
+        <div class="model" id="model_{{ model[0] }}" onclick=location.href='{{ url_for("functions") }}'>
+            <div class="model_box">
+                <div class="model_img">
+                    <img src="{{ url_for("static", filename=model[2]) }}" alt="{{ model[1] }}" >
+                </div>
+                <div class="model_title">{{ model[1] }}</div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

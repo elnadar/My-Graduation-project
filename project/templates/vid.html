@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #content{
+        align-items: center !important;
+        display: flex;
+    }
+</style>
+<h2>Live <b>Camera</b></h2>
+<h3>
+    Raise your hand...
+</h3>
+<img src="{{ url_for('video_feed') }}" width="100%" style=" border-radius: 15px; ">
+
+<br>
+<br>
+
+<div class="container-btn">
+    <button class="btn" onclick=location.href="{{ url_for('move_the_hand') }}";>
+    <span> Back To Moving Panel </span>
+    </button>
+</div>
+
+{% endblock %}

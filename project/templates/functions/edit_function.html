@@ -1,0 +1,152 @@
+{% extends "base.html" %} {% block content %}
+<h2><b>{{ function_detailes[1] }}</b> Function</h2>
+<br />
+<h3>Function Info.</h3>
+<br />
+<div style="border: 1px dashed #aaa; border-radius: 10px">
+  <table>
+    <thead>
+      <th>Title</th>
+      <th>Info</th>
+    </thead>
+    <tbody>
+      {% for title, info in zip(function_titles, function_detailes) %}
+      <tr>
+        <td>{{ title }}</td>
+        <td>{{ info }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br />
+<br />
+
+<h3>Moves In This Function</h3>
+<br />
+<form method="post">
+    <div class="padding dashed">
+<div class="dashed" style="border-radius: 10px">
+  <table>
+    <thead>
+      {% for head in moves_table_header %}
+      <th>{{ head }}</th>
+      {% endfor %}
+      <th>delete</th>
+    </thead>
+    <tbody>
+      {% for i, function in enumerate(query) %}
+      <tr>
+        <td>{{ function[0] }}</td>
+        <td>
+            <select name="finger_{{ function[0] }}" required>
+                <!-- value => motor_id, motor_num_in_the_model -->
+                <option value="">
+                    Select a finger.
+                </option>
+                {% for option in motors %}
+                <option {{ "selected" if option[0] == function[-1] }} value="{{ option[0] }}">
+                    {{ option[1] }}
+                </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td><input min="0" type="number" value="{{ function[2] }}" name="waitTime_{{ function[0] }}" id="wait_time-{{ function[0] }}"></td>
+        <td>
+          <button class="delete_row" onclick="delete_row(this)" type="button">
+            <img src="{{ url_for("static", filename="imgs/site/close.svg") }}" alt="Cancel" >
+          </button>
+       </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<!-- {{ dic }} -->
+<div class="container-btn" style="margin: 1rem;">
+<button type="button" class="btn blue" name="add_new_move"> Add New Move </button>
+</div>
+</div>
+<br />
+<br />
+<div class="container-btn">
+    <button class="btn" type="submit">
+        <span> Save </span>
+    </button>
+
+    <button type="button" class="red btn" onclick="location.href=`{{ url_for('functions') }}`">
+        <span> Cancel </span>
+    </button>
+</div>
+</form>
+
+<script type="text/javascript">
+    let add_new_move = document.getElementsByName("add_new_move");
+    let table = document.getElementsByTagName('table')[1];
+    let tbody = table.getElementsByTagName('tbody')[0];
+    let last = Number(get_last_element());
+    let new_element_num =  last ? last + 1 : 1;
+
+    function get_last_element() {
+        let tds = document.getElementsByTagName("td");
+        let last = tds.length - 4;
+
+        return tds[last].innerText;
+    }
+
+    function get_tr(){
+        return tbody.getElementsByTagName('tr');
+    }
+
+    function recount(){
+        let trs = get_tr();
+        let first_td;
+        let count = 1;
+        for (tr of trs){
+            first_td = tr.getElementsByTagName('td')[0];
+            first_td.innerText = count++;
+        }
+    }
+
+    function delete_row(e)
+    {
+        e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+        recount();
+    }
+    function create_new_row() {
+        new_element_num++;
+        let last = Number(get_last_element());
+        let element_num =  last ? last + 1 : 1;
+        let html = `
+        <td>${element_num}</td>
+        <td>
+            <select name="finger_${new_element_num}" required>
+                <!-- value => motor_id, motor_num_in_the_model -->
+                <option value="">
+                    Select a finger.
+                </option>
+                {% for option in motors %}
+                <option value="{{ option[0] }}">
+                    {{ option[1] }}
+                </option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>
+            <input min="0" type="number" value="0" name="waitTime_${new_element_num}" id="wait_time-${new_element_num}">
+        </td>
+        <td>
+          <button class="delete_row" onclick="delete_row(this)" type="button">
+            <img src="{{ url_for("static", filename="imgs/site/close.svg") }}" alt="Cancel" >
+          </button>
+         </td>`;
+
+        const node = document.createElement("tr");
+        node.innerHTML = html;
+        tbody.appendChild(node);
+
+    }
+
+    add_new_move[0].addEventListener("click", create_new_row);
+</script>
+{% endblock %}

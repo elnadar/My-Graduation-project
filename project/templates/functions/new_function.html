@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block content %}
+<h2><b>Creating</b> Function</h2>
+<br />
+<h3>Function Info.</h3>
+<div style="border:1px dashed #aaa; border-radius: 10px; padding: 25px;">
+  <form method="POST">
+  <div>
+    <label for="function_name"> Function name : </label>
+    <input name="function_name" id="function_name" required placeholder="Enter a name for your function" />
+  </div>
+  <div>
+    <label for="model_id"> choose model name : </label>
+    <select id="model_id" name="model_id" required class="select">
+      <option selected value="" disabled>Select an option</option>
+      {% for model in models %}
+        <option value="{{ model[0] }}">{{ model[1] }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="container-btn">
+    <button class="btn" type="submit">
+      <span> Create </span>
+    </button>
+    <button class="btn red" onclick=location.href="{{ url_for('functions') }}";>
+      <span> Cancle </span>
+    </button>
+    <br />
+  <br />
+</form>
+</div>
+</div>
+{% endblock %}

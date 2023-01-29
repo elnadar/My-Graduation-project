@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2>Your functions</h2>
+    <p> You have <b>{{ query_len }} {{ "functions" if query_len > 1 else "function" }} </b>, you can click on function name to see its information and edit it if it's editable. 
+        <br>
+        <b>NOTE: </b> only created function can be editable, default functions cannot be editable.
+        <br>
+    </p>
+    <div style="border:1px dashed #aaa; border-radius: 10px;">
+        <table>
+            <thead>
+                <tr>
+                    <th> Function ID </th>
+                    <th> Name </td>
+                    <th> Model Name </th>
+                    <th> Default Function? </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for function in query %}
+                    <tr onclick=location.href='{{ url_for("functions") }}/{{ function[0] }}'>
+                        {% for i, cell in enumerate(function) %}
+                            <td>
+                                {% if i == 3 %}
+                                    {{ bool(cell) }}
+                                {% else %}
+                                    {{ cell }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="container-btn">
+        <button class="btn" onclick=location.href="{{ url_for('new_function') }}";>
+          <span> Create a new function </span>
+        </button>
+    </div>
+        
+{% endblock %}

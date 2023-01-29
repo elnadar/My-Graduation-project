@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    #content{
+        align-items: center !important;
+        display: flex;
+    }
+    .model_img > img {
+        width: 100px;
+    }
+</style>
+
+<h3 style="text-align: center">
+    How do you want to control the Hand?
+</h3>
+<div id="models">
+    <div class="model" onclick=location.href='{{ url_for("move_using_function") }}'>
+        <div class="model_box">
+            <div class="model_img">
+                <img src="{{ url_for("static", filename="imgs/site/function.svg") }}" alt="Function" >
+            </div>
+            <div class="model_title">Using Functions</div>
+        </div>
+    </div>
+    <div class="model" onclick=location.href='{{ url_for("vid") }}'>
+        <div class="model_box">
+            <div class="model_img">
+                <img src="{{ url_for("static", filename="imgs/site/camera.svg") }}" alt="Camera" >
+            </div>
+            <div class="model_title">Using Camera</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
