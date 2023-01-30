@@ -358,3 +358,7 @@ def move_using_id_function(function_id, function_name=""):
 #         menu_template=menu,
 #         active=active
 #     )
+
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
